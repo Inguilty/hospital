@@ -7,8 +7,9 @@ servers:
 paths:
   /users:
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: ''
+      tags:
+        - Users
       responses:
         '200':
           description: OK
@@ -24,8 +25,8 @@ paths:
                   $ref: '#/components/schemas/Person'
               examples:
                 example-1: {}
-      operationId: get-users
-      description: Get all users
+      operationId: get/create-users
+      description: 'GET, CREATE users'
       requestBody:
         content:
           application/json:
@@ -68,11 +69,26 @@ paths:
               examples:
                 example-1: {}
       description: Create new user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Person'
+      parameters:
+        - schema:
+            type: string
+            minLength: 1
+          in: query
+          description: ''
+          required: true
+          name: name
+        - schema:
+            type: string
+            minLength: 1
+          in: query
+          name: middleName
+          required: true
+        - schema:
+            type: string
+            minLength: 1
+          in: query
+          name: surname
+          required: true
 components:
   schemas:
     Person:
