@@ -89,6 +89,8 @@ paths:
           in: query
           name: surname
           required: true
+      tags:
+        - Users
 components:
   schemas:
     Person:
@@ -125,4 +127,6 @@ components:
               endDate:
                 type: string
                 format: date-time
+      x-tags:
+        - Users
   securitySchemes: {}
