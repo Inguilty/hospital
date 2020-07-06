@@ -7,7 +7,7 @@ servers:
 paths:
   /users:
     get:
-      summary: ''
+      summary: Get/Create user(s)
       tags:
         - Users
       responses:
@@ -100,7 +100,7 @@ paths:
         required: true
         description: ''
     post:
-      summary: ''
+      summary: Register disease
       operationId: post-users-disease-userId
       responses:
         '201':
@@ -138,7 +138,7 @@ paths:
   /therapy/prescription:
     parameters: []
     post:
-      summary: ''
+      summary: Prescribe a treatment
       operationId: post-therapy-prescription-userId-diseaseId
       responses:
         '201':
@@ -165,7 +165,146 @@ paths:
           name: diseaseId
           required: true
           description: 'id of disease, which user received after therapy'
-  /therapy/medicalTest: {}
+  /therapy/medicalTest:
+    post:
+      summary: Prescribe a medical test
+      operationId: post-therapy-medicalTest
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MedicalTest'
+        '400':
+          description: Bad Request
+      description: ''
+      parameters:
+        - schema:
+            type: integer
+            minimum: 0
+            maximum: 100000
+          in: query
+          name: userId
+          description: id of user to get medical test
+          required: true
+        - schema:
+            type: integer
+            minimum: 0
+            maximum: 100000
+          in: query
+          name: diseaseId
+          description: "id of user's disease"
+          required: true
+    get:
+      summary: ''
+      operationId: get-therapy-medicalTest
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 7
+                items:
+                  $ref: '#/components/schemas/MedicalTest'
+        '400':
+          description: Bad Request
+      parameters:
+        - schema:
+            type: integer
+            format: date
+          in: query
+          name: year
+          description: ''
+          required: true
+  '/therapy/prescription/{prescriptionId}/drugDosage':
+    parameters:
+      - schema:
+          type: integer
+          minimum: 0
+          maximum: 100000
+        name: prescriptionId
+        in: path
+        required: true
+    put:
+      summary: "Change drug dosage (400 doesn't work, don't know how to set body parameters as required)"
+      operationId: put-therapy-prescription-prescriptionId-drugDosage
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Drug'
+              examples: {}
+        '400':
+          description: Bad Request
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Drug'
+            examples: {}
+        description: New drug dosage
+  '/therapy/medicalTest/{medicalTestId}/attachment':
+    parameters:
+      - schema:
+          type: integer
+          minimum: 0
+          maximum: 100000
+        name: medicalTestId
+        in: path
+        required: true
+    post:
+      summary: Add attachment to the medical test
+      operationId: post-therapy-medicalTest-medicalTestId-attachment
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        '400':
+          description: Bad Request
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+        description: ''
+  /therapy/prescription/medication:
+    get:
+      summary: Get all ongoing medications
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 10
+                uniqueItems: false
+                minItems: 0
+                items:
+                  $ref: '#/components/schemas/Medication'
+        '400':
+          description: Bad Request
+      operationId: get-therapy-prescription-medication
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: isDone
+          description: ''
+          required: true
+    parameters: []
 components:
   schemas:
     Person:
@@ -236,9 +375,13 @@ components:
     Medication:
       title: Medication
       type: object
+      x-tags:
+        - Prescription
       properties:
         id:
           type: integer
+          minimum: 0
+          maximum: 100000
         date:
           type: string
           format: date
@@ -253,8 +396,6 @@ components:
               type: string
             code:
               type: string
-      x-tags:
-        - Prescription
     Drug:
       title: Drug
       type: object
@@ -283,6 +424,8 @@ components:
       properties:
         id:
           type: integer
+          minimum: 0
+          maximum: 100000
         name:
           type: string
         description:
@@ -301,6 +444,8 @@ components:
       properties:
         id:
           type: integer
+          minimum: 0
+          maximum: 100000
         Conent:
           type: string
         Description:
