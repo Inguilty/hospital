@@ -91,6 +91,81 @@ paths:
           required: true
       tags:
         - Users
+  '/therapy/disease/{userId}':
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: ''
+    post:
+      summary: ''
+      operationId: post-users-disease-userId
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeEvent'
+        '400':
+          description: Bad Request
+      parameters:
+        - schema:
+            type: string
+            format: date
+          in: query
+          description: "Person's date of illness"
+          name: startDate
+          required: true
+        - schema:
+            type: string
+            format: ''
+          in: query
+          name: name
+          description: Name of illness
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: description
+          description: Description of illness
+          required: true
+      description: ''
+      tags:
+        - Disease
+  /therapy/prescription:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-therapy-prescription-userId-diseaseId
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prescription'
+      parameters:
+        - schema:
+            type: integer
+            minLength: 1
+            minimum: 0
+            maximum: 100000
+          in: query
+          name: userId
+          required: true
+          description: id of user to get prescription
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 100000
+          in: query
+          name: diseaseId
+          required: true
+          description: 'id of disease, which user received after therapy'
+  /therapy/medicalTest: {}
 components:
   schemas:
     Person:
@@ -98,6 +173,8 @@ components:
       type: object
       description: hospital client entity
       x-examples: {}
+      x-tags:
+        - Users
       properties:
         id:
           type: integer
@@ -117,16 +194,119 @@ components:
           maxItems: 5
           minItems: 0
           items:
-            type: object
-            properties:
-              description:
-                type: string
-              startDate:
-                type: string
-                format: date-time
-              endDate:
-                type: string
-                format: date-time
+            $ref: '#/components/schemas/LifeEvent'
+    LifeEvent:
+      title: LifeEvent
+      type: object
       x-tags:
-        - Users
+        - Disease
+      description: ''
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          maximum: 100000
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+    Prescription:
+      title: Prescription
+      type: object
+      x-tags:
+        - Prescription
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          maximum: 100000
+        description:
+          type: string
+        name:
+          type: string
+        drugs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Drug'
+      description: ''
+    Medication:
+      title: Medication
+      type: object
+      properties:
+        id:
+          type: integer
+        date:
+          type: string
+          format: date
+        isDone:
+          type: boolean
+        notes:
+          type: string
+        MedicationRegimen:
+          type: object
+          properties:
+            name:
+              type: string
+            code:
+              type: string
+      x-tags:
+        - Prescription
+    Drug:
+      title: Drug
+      type: object
+      x-tags:
+        - Prescription
+      x-examples: {}
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          maximum: 100000
+        description:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+          maximum: 100
+    MedicalTest:
+      title: MedicalTest
+      type: object
+      x-tags:
+        - MedicalTest
+      description: ''
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        date:
+          type: string
+          format: date
+        attachment:
+          $ref: '#/components/schemas/Attachment'
+    Attachment:
+      title: Attachment
+      type: object
+      x-tags:
+        - MedicalTest
+      description: ''
+      properties:
+        id:
+          type: integer
+        Conent:
+          type: string
+        Description:
+          type: string
+        FileName:
+          type: string
+        Path:
+          type: string
   securitySchemes: {}
