@@ -1,0 +1,556 @@
+{
+	"info": {
+		"_postman_id": "2dd84b6a-29ac-44b3-8cde-c7bb8934574a",
+		"name": "Hospital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create user success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/users?name=a&surname=b&middleName=c",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "a"
+						},
+						{
+							"key": "surname",
+							"value": "b"
+						},
+						{
+							"key": "middleName",
+							"value": "c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create user error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/users?name=a&surname=b",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "a"
+						},
+						{
+							"key": "surname",
+							"value": "b"
+						},
+						{
+							"key": "middleName",
+							"value": "c",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Register disease error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/diseases/5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"diseases",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Register disease success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/diseases/5?startDate=2012-04-23&name=a&description=s",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"diseases",
+						"5"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2012-04-23"
+						},
+						{
+							"key": "name",
+							"value": "a"
+						},
+						{
+							"key": "description",
+							"value": "s"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Prescribe a treatment success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/prescriptions?userId=1&diseaseId=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"prescriptions"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "diseaseId",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Get prescription for user with some disease"
+			},
+			"response": []
+		},
+		{
+			"name": "4. Prescribe a treatment error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"asdasd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/prescriptions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"prescriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Prescribe a medical test success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/medicalTests?userId=321&diseaseId=123",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"medicalTests"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "321"
+						},
+						{
+							"key": "diseaseId",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Prescribe a medical test error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/medicalTests?userId=321",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"medicalTests"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "321"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Change drug dosage",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/prescriptions/1/drugDosages?id=1&description=adf&name=sdafsafd&quantity=5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"prescriptions",
+						"1",
+						"drugDosages"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "description",
+							"value": "adf"
+						},
+						{
+							"key": "name",
+							"value": "sdafsafd"
+						},
+						{
+							"key": "quantity",
+							"value": "5",
+							"description": "new value"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Add attachment to the medical test error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/medicalTests/d/attachments",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"medicalTests",
+						"d",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Add attachment to the medical test succcess",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":123,\r\n    \"content\":\"saddsa\",\r\n    \"description\":\"asfdfabasd\",\r\n    \"fileName\":\"fasdafsdfa.txt\",\r\n    \"path\":\"/sdfaasdassda/asdasdsda\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/medicalTests/123/attachments",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"medicalTests",
+						"123",
+						"attachments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get all ongoing medications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/prescriptions/medications?isDone=false",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"prescriptions",
+						"medications"
+					],
+					"query": [
+						{
+							"key": "isDone",
+							"value": "false"
+						}
+					]
+				},
+				"description": "For demonstration purposes made query parameter isDone as required, but still mock data returned after call doesn't have such parameter, I couldn't realize how to configure such logic in Stoplight."
+			},
+			"response": []
+		},
+		{
+			"name": "9. Get all medical tests for the previous year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/medicalTests?year=2019",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"medicalTests"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2019"
+						}
+					]
+				},
+				"description": "For demonstration purposes made query parameter year as required, but still mock data returned after call doesn't have such parameter"
+			},
+			"response": []
+		},
+		{
+			"name": "10.\tSearch for users whom diagnosis starts with",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/diseases?nameBeginsWith=head",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"diseases"
+					],
+					"query": [
+						{
+							"key": "nameBeginsWith",
+							"value": "head"
+						}
+					]
+				},
+				"description": "For demonstration purposes made query parameter nameBeginsWith as required"
+			},
+			"response": []
+		},
+		{
+			"name": "11.\tCancel the medical test",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/medicalTests/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"medicalTests",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12.\tFinish the therapy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 123,\r\n    \"startDate\": \"2020-05-05\",\r\n    \"endDate\": \"2020-05-07\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3104/therapies/123",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3104",
+					"path": [
+						"therapies",
+						"123"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "123",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
