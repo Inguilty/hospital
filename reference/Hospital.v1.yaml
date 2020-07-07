@@ -27,17 +27,6 @@ paths:
                 example-1: {}
       operationId: get/create-users
       description: 'GET, CREATE users'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            examples: {}
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-        description: ''
     post:
       summary: ''
       operationId: post-users
@@ -305,6 +294,72 @@ paths:
           description: ''
           required: true
     parameters: []
+  /therapy/disease:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 6
+                items:
+                  $ref: '#/components/schemas/LifeEvent'
+        '400':
+          description: Bad Request
+      operationId: get-therapy-disease
+      parameters:
+        - schema:
+            type: string
+            minLength: 1
+          in: query
+          name: nameBeginsWith
+          required: true
+  '/therapy/medicalTest/{medicalTestId}':
+    parameters:
+      - schema:
+          type: string
+        name: medicalTestId
+        in: path
+        required: true
+    delete:
+      summary: ''
+      operationId: delete-therapy-medicalTest-medicalTestId
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+  '/therapy/{therapyId}':
+    parameters:
+      - schema:
+          type: string
+        name: therapyId
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-therapy-therapyId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Therapy'
+        '400':
+          description: Bad Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Therapy'
+        description: ''
+      description: ''
 components:
   schemas:
     Person:
@@ -454,4 +509,18 @@ components:
           type: string
         Path:
           type: string
+    Therapy:
+      title: Therapy
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 0
+          maximum: 100000
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
   securitySchemes: {}
